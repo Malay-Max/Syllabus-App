@@ -31,7 +31,8 @@ export async function POST(req: NextRequest) {
         await fs.writeFile(filePath, buffer);
 
         const scriptPath = path.join(process.cwd(), 'syllabus-scrapper.py');
-        const dbPath = path.join(process.cwd(), 'prisma', 'syllabus_master.db');
+        // Prisma reads from /app/prisma/prisma/syllabus_master.db due to migration structure
+        const dbPath = path.join(process.cwd(), 'prisma', 'prisma', 'syllabus_master.db');
 
         // Use python3 on Linux/Docker, specific path on Windows
         const pythonPath = process.platform === 'win32'
