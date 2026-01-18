@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: syllabus-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./syllabus_master.db
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      - ./prisma:/app/prisma
+      - ./uploads:/app/uploads
