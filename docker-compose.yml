@@ -13,3 +13,7 @@ services:
     volumes:
       - ./prisma:/app/prisma
       - ./uploads:/app/uploads
+networks:
+  default:
+    external: true
+    name: npm-network
