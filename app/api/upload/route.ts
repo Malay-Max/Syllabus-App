@@ -67,10 +67,14 @@ export async function POST(req: NextRequest) {
 
                     if (code === 0) {
                         controller.enqueue(encoder.encode('\n✅ Process completed successfully!'));
-                        // We can't easily revalidatePath from here inside the stream close safely? 
-                        // Actually revalidatePath is async but we are closing stream.
-                        // It's safer to rely on the client to refresh or revalidatePath call at start/end of request logic if possible.
-                        // But since this is a Route Handler, revalidatePath works.
+
+                        // Force Prisma to disconnect and clear its cache
+                        // This is necessary because Python wrote directly to the DB
+                        const { prisma } = await import('@/lib/db');
+                        await prisma.$disconnect();
+
+                        // Wait a moment then revalidate paths
+                        await new Promise(resolve => setTimeout(resolve, 100));
                         revalidatePath('/');
                         revalidatePath('/browse');
                     } else {
