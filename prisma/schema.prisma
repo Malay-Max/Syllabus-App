@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Author {
+  id    Int    @id @default(autoincrement())
+  name  String @unique(map: "sqlite_autoindex_authors_1")
+  texts Text[]
+
+  @@map("authors")
+}
+
+model Text {
+  id            Int             @id @default(autoincrement())
+  title         String
+  authorId      Int             @map("author_id")
+  author        Author          @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  syllabusEntries SyllabusEntry[]
+
+  @@unique([title, authorId], map: "sqlite_autoindex_texts_1")
+  @@map("texts")
+}
+
+model University {
+  id            Int             @id @default(autoincrement())
+  name          String          @unique(map: "sqlite_autoindex_universities_1")
+  syllabusEntries SyllabusEntry[]
+
+  @@map("universities")
+}
+
+model SyllabusEntry {
+  universityId Int        @map("university_id")
+  textId       Int        @map("text_id")
+  semester     Int?
+  courseCode   String     @map("course_code")
+  marks        String?
+  credits      Int?
+  
+  text         Text       @relation(fields: [textId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  university   University @relation(fields: [universityId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([universityId, textId, courseCode])
+  @@map("syllabus_map")
+}
