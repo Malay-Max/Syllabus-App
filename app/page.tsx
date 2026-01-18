@@ -66,7 +66,7 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {latestUniversities.map((uni) => (
+              {latestUniversities.map((uni: { id: number, name: string }) => (
                 <div key={uni.id} className="flex items-center">
                   <Library className="mr-2 h-4 w-4 text-muted-foreground" />
                   <div className="ml-2 space-y-1">
