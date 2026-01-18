@@ -12,11 +12,7 @@ services:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     volumes:
       - ./prisma:/app/prisma
-<<<<<<< HEAD
-      - ./uploads:/app/uploads
 networks:
   default:
     external: true
     name: npm-network
-=======
->>>>>>> b636e66524c24bc34250204a7c0f2423c631bcfd
