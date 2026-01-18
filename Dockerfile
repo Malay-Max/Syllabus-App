@@ -58,6 +58,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/syllabus-scrapper.py ./syllabus-scrapper.py
 
+# Create uploads directory and set proper ownership before switching to nextjs user
+RUN mkdir -p /app/uploads && chown -R nextjs:nodejs /app/uploads
+
 USER nextjs
 
 EXPOSE 3000
