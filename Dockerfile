@@ -1,5 +1,8 @@
 FROM node:20-alpine AS base
 
+# Install OpenSSL in base stage so it's available for prisma generate in builder and runtime in runner
+RUN apk add --no-cache openssl
+
 # Install dependencies only when needed
 FROM base AS deps
 WORKDIR /app
