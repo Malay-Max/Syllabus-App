@@ -43,8 +43,8 @@ next-env.d.ts
 /app/generated/prisma
 
 # local database
-*.db
-*.sqlite
+#*.db
+#*.sqlite
 
 # logs
 *.log
