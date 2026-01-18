@@ -34,6 +34,12 @@ export function Navbar({
             >
                 Manage Data
             </Link>
+            <Link
+                href="/upload"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
+                Upload Syllabus
+            </Link>
         </nav>
     )
 }
