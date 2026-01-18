@@ -32,7 +32,11 @@ export async function POST(req: NextRequest) {
 
         const scriptPath = path.join(process.cwd(), 'syllabus-scrapper.py');
         const dbPath = path.join(process.cwd(), 'prisma', 'syllabus_master.db');
-        const pythonPath = "c:\\Users\\malay\\AppData\\Local\\Programs\\Python\\Python310\\python.exe";
+
+        // Use python3 on Linux/Docker, specific path on Windows
+        const pythonPath = process.platform === 'win32'
+            ? "c:\\Users\\malay\\AppData\\Local\\Programs\\Python\\Python310\\python.exe"
+            : "python3";
 
         // Create a streaming response
         const encoder = new TextEncoder();
