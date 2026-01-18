@@ -68,4 +68,4 @@ ENV HOSTNAME "0.0.0.0"
 
 # Run migrations and then start the server
 # We use a shell command to ensure migrations run before start
-CMD ["sh", "-c", "prisma migrate deploy && node server.js"]
+CMD ["node", "server.js"]
