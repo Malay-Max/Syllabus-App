@@ -42,6 +42,9 @@ RUN adduser --system --uid 1001 nextjs
 RUN apk add --no-cache python3 py3-pip
 RUN pip3 install google-generativeai python-dotenv --break-system-packages
 
+# Install Prisma globally to match package.json version and avoid npx downloading latest (v7+)
+RUN npm install -g prisma@5.22.0
+
 COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
@@ -61,4 +64,4 @@ ENV HOSTNAME "0.0.0.0"
 
 # Run migrations and then start the server
 # We use a shell command to ensure migrations run before start
-CMD ["sh", "-c", "npx prisma migrate deploy && node server.js"]
+CMD ["sh", "-c", "prisma migrate deploy && node server.js"]
