@@ -38,12 +38,13 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Install Python in runner stage as well
-RUN apk add --no-cache python3 py3-pip
+# Install Python and OpenSSL (required for Prisma) in runner stage
+RUN apk add --no-cache python3 py3-pip openssl
 RUN pip3 install google-generativeai python-dotenv --break-system-packages
 
-# Install Prisma globally to match package.json version and avoid npx downloading latest (v7+)
-RUN npm install -g prisma@5.22.0
+# Install Prisma globally to match package.json version
+# We set unsafe-perm to ensure it installs engines properly as root
+RUN npm install -g prisma@5.22.0 --unsafe-perm
 
 COPY --from=builder /app/public ./public
 
