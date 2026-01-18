@@ -12,4 +12,3 @@ services:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     volumes:
       - ./prisma:/app/prisma
-      - ./uploads:/app/uploads
